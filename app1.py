@@ -21,6 +21,34 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
     "Client & Sample Info", "Potency & Cannabinoid Analysis", "Terpene Profile", "Metals and Mycotoxins", 
     "Moisture & Filth", "Residual Solvents", "Microbial Testing", "Pesticide & Aspergillus Testing"
 ])
+# Initialize session state to track tab index
+if 'tab_index' not in st.session_state:
+    st.session_state.tab_index = 0
+
+# List of tabs
+tabs = [
+    "Client & Sample Info", 
+    "Potency & Cannabinoid Analysis", 
+    "Terpene Profile", 
+    "Metals and Mycotoxins", 
+    "Moisture & Filth", 
+    "Residual Solvents", 
+    "Microbial Testing", 
+    "Pesticide & Aspergillus Testing"
+]
+
+# Display navigation arrows
+col1, col2, col3 = st.columns([1, 8, 1])
+with col1:
+    if st.button("⬅️ Previous"):
+        st.session_state.tab_index = (st.session_state.tab_index - 1) % len(tabs)
+with col3:
+    if st.button("Next ➡️"):
+        st.session_state.tab_index = (st.session_state.tab_index + 1) % len(tabs)
+
+# Show the selected tab
+st.subheader(f"{tabs[st.session_state.tab_index]}")
+selected_tab = tabs[st.session_state.tab_index]
 
 # Client Information Tab
 with tab1:
