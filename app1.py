@@ -66,6 +66,15 @@ with tab2:
     }
     potency_df = pd.DataFrame(potency_data)
 
+    # Interactive Line Chart for Potency Results
+    st.write("### Potency Analysis Chart")
+    selected_analytes = st.multiselect("Select Analytes to Display", options=potency_df['Analyte'], default=potency_df['Analyte'])
+    filtered_potency_df = potency_df[potency_df['Analyte'].isin(selected_analytes)]
+    
+    fig = px.line(filtered_potency_df, x="Analyte", y="Percentage", title="Potency Analysis", markers=True)
+    fig.update_layout(xaxis_title="Analyte", yaxis_title="Percentage (%)")
+    st.plotly_chart(fig)
+
     # Summary of Potency Findings
     st.write("""
     **Summary**:
@@ -78,15 +87,6 @@ with tab2:
     st.write("### Potency Measurement Table")
     st.table(potency_df)
 
-    # Interactive Line Chart for Potency Results
-    st.write("### Potency Analysis Chart")
-    selected_analytes = st.multiselect("Select Analytes to Display", options=potency_df['Analyte'], default=potency_df['Analyte'])
-    filtered_potency_df = potency_df[potency_df['Analyte'].isin(selected_analytes)]
-    
-    fig = px.line(filtered_potency_df, x="Analyte", y="Percentage", title="Potency Analysis", markers=True)
-    fig.update_layout(xaxis_title="Analyte", yaxis_title="Percentage (%)")
-    st.plotly_chart(fig)
-
 # Terpene Profile Tab
 with tab3:
     st.header("Terpene Profile")
@@ -95,6 +95,15 @@ with tab3:
         "Percentage (%)": [3.025, 2.592, 1.709, 0.49, 0.6]
     }
     terpene_df = pd.DataFrame(terpene_data)
+
+    # Interactive Line Chart for Terpenes
+    st.write("### Terpene Profile Chart")
+    selected_terpenes = st.multiselect("Select Terpenes to Display", options=terpene_df['Terpene'], default=terpene_df['Terpene'])
+    filtered_terpene_df = terpene_df[terpene_df['Terpene'].isin(selected_terpenes)]
+    
+    fig4 = px.line(filtered_terpene_df, x="Terpene", y="Percentage (%)", title="Terpene Profile", markers=True)
+    fig4.update_layout(xaxis_title="Terpene", yaxis_title="Percentage (%)")
+    st.plotly_chart(fig4)
 
     # Summary of Terpene Profile Findings
     st.write("""
@@ -107,26 +116,22 @@ with tab3:
     st.write("### Terpene Measurement Table")
     st.table(terpene_df)
 
-    # Interactive Line Chart for Terpenes
-    st.write("### Terpene Profile Chart")
-    selected_terpenes = st.multiselect("Select Terpenes to Display", options=terpene_df['Terpene'], default=terpene_df['Terpene'])
-    filtered_terpene_df = terpene_df[terpene_df['Terpene'].isin(selected_terpenes)]
-    
-    fig4 = px.line(filtered_terpene_df, x="Terpene", y="Percentage (%)", title="Terpene Profile", markers=True)
-    fig4.update_layout(xaxis_title="Terpene", yaxis_title="Percentage (%)")
-    st.plotly_chart(fig4)
-
 # Metals and Mycotoxins Tab
 with tab4:
     st.header("Metals and Mycotoxins Testing Results")
 
-    # Metals Data
+    # Interactive Line Chart for Metals Data
+    st.write("### Metals Testing Results Chart")
     metals_data = {
         "Metal": ["Antimony (Sb)", "Arsenic", "Cadmium", "Chromium", "Lead", "Nickel", "Mercury"],
         "Amount (ppm)": [0.0007, 0.0006, 0.0006, 1.511, 0.154, 0.086, "<LOQ"],
         "Status": ["Pass", "Pass", "Pass", "Pass", "Pass", "Pass", "Pass"]
     }
     metals_df = pd.DataFrame(metals_data)
+    
+    fig2 = px.line(metals_df, x="Metal", y="Amount (ppm)", title="Metals Testing Results", markers=True)
+    fig2.update_layout(xaxis_title="Metal", yaxis_title="Amount (ppm)")
+    st.plotly_chart(fig2)
 
     # Summary of Metals & Mycotoxins Findings
     st.write("""
@@ -138,13 +143,8 @@ with tab4:
     st.write("### Metals Measurement Table")
     st.table(metals_df)
 
-    # Interactive Line Chart for Metals Data
-    st.write("### Metals Testing Results Chart")
-    fig2 = px.line(metals_df, x="Metal", y="Amount (ppm)", title="Metals Testing Results", markers=True)
-    fig2.update_layout(xaxis_title="Metal", yaxis_title="Amount (ppm)")
-    st.plotly_chart(fig2)
-
-    # Mycotoxins Data
+    # Interactive Line Chart for Mycotoxins Data
+    st.write("### Mycotoxins Testing Results Chart")
     mycotoxins_data = {
         "Analyte": ["Aflatoxin B2", "Aflatoxin B1", "Ochratoxin A", "Aflatoxin G1", "Aflatoxin G2"],
         "LOQ (ppm)": [0.00141, 0.00099, 0.00113, 0.00129, 0.00114],
@@ -153,26 +153,29 @@ with tab4:
     }
     mycotoxins_df = pd.DataFrame(mycotoxins_data)
 
-    # Table for Mycotoxins Data
-    st.write("### Mycotoxins Measurement Table")
-    st.table(mycotoxins_df)
-
-    # Interactive Line Chart for Mycotoxins Data
-    st.write("### Mycotoxins Testing Results Chart")
     fig3 = px.line(mycotoxins_df, x="Analyte", y="LOQ (ppm)", title="Mycotoxins Testing Results", markers=True)
     fig3.update_layout(xaxis_title="Analyte", yaxis_title="LOQ (ppm)")
     st.plotly_chart(fig3)
+
+    # Table for Mycotoxins Data
+    st.write("### Mycotoxins Measurement Table")
+    st.table(mycotoxins_df)
 
 # Moisture Content & Filth Testing Tab
 with tab5:
     st.header("Moisture Content and Filth Testing")
 
-    # Data for moisture content and filth testing
+    # Interactive Line Chart for Moisture Content and Water Activity
+    st.write("### Moisture Content and Water Activity Chart")
     moisture_data = {
         "Test": ["Moisture Content", "Water Activity", "Mammalian Excreta", "Foreign Material"],
         "Value": [14.10, 0.47, "< 1mg/lb", "< 5% stems, < 2% other FM"]
     }
     moisture_df = pd.DataFrame(moisture_data)
+    
+    fig5 = px.line(moisture_df, x="Test", y="Value", title="Moisture Content and Water Activity", markers=True)
+    fig5.update_layout(xaxis_title="Test", yaxis_title="Value")
+    st.plotly_chart(fig5)
 
     # Summary of Moisture & Filth Findings
     st.write("""
@@ -186,22 +189,22 @@ with tab5:
     st.write("### Moisture & Filth Measurement Table")
     st.table(moisture_df)
 
-    # Interactive Line Chart for Moisture Content and Water Activity
-    st.write("### Moisture Content and Water Activity Chart")
-    fig5 = px.line(moisture_df, x="Test", y="Value", title="Moisture Content and Water Activity", markers=True)
-    fig5.update_layout(xaxis_title="Test", yaxis_title="Value")
-    st.plotly_chart(fig5)
-
 # Residual Solvents Tab
 with tab6:
     st.header("Residual Solvents Testing Results")
 
+    # Interactive Line Chart for Residual Solvents Data
+    st.write("### Residual Solvents Testing Results Chart")
     solvents_data = {
         "Solvent": ["Acetone", "Acetonitrile", "Total Butane", "Ethanol", "Ethyl Acetate", "Diethyl Ether", "Methanol"],
         "Amount (ppm)": ["<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ"],
         "Status": ["Pass", "Pass", "Pass", "Pass", "Pass", "Pass", "Pass"]
     }
     solvents_df = pd.DataFrame(solvents_data)
+    
+    fig6 = px.line(solvents_df, x="Solvent", y="Amount (ppm)", title="Residual Solvents Testing Results", markers=True)
+    fig6.update_layout(xaxis_title="Solvent", yaxis_title="Amount (ppm)")
+    st.plotly_chart(fig6)
 
     # Summary of Residual Solvents Findings
     st.write("""
@@ -214,23 +217,22 @@ with tab6:
     st.write("### Residual Solvents Measurement Table")
     st.table(solvents_df)
 
-    # Interactive Line Chart for Residual Solvents Data
-    st.write("### Residual Solvents Testing Results Chart")
-    fig6 = px.line(solvents_df, x="Solvent", y="Amount (ppm)", title="Residual Solvents Testing Results", markers=True)
-    fig6.update_layout(xaxis_title="Solvent", yaxis_title="Amount (ppm)")
-    st.plotly_chart(fig6)
-
 # Microbial and Pesticides Testing Tab
 with tab7:
     st.header("Microbial and Pesticides Testing Results")
 
-    # Microbial Data
+    # Interactive Line Chart for Microbial Data
+    st.write("### Microbial Testing Results Chart")
     microbial_data = {
         "Analyte": ["STEC", "Salmonella", "Total Yeast and Mold Count", "Aerobic Bacteria Count"],
         "Result": ["Negative", "Negative", "Not Detected", "Not Detected"],
         "Status": ["Pass", "Pass", "Pass", "Pass"]
     }
     microbial_df = pd.DataFrame(microbial_data)
+
+    fig7 = px.line(microbial_df, x="Analyte", y="Result", title="Microbial Testing Results", markers=True)
+    fig7.update_layout(xaxis_title="Microbial Analyte", yaxis_title="Result")
+    st.plotly_chart(fig7)
 
     # Summary of Microbial Findings
     st.write("""
@@ -242,22 +244,22 @@ with tab7:
     st.write("### Microbial Measurement Table")
     st.table(microbial_df)
 
-    # Interactive Line Chart for Microbial Data
-    st.write("### Microbial Testing Results Chart")
-    fig7 = px.line(microbial_df, x="Analyte", y="Result", title="Microbial Testing Results", markers=True)
-    fig7.update_layout(xaxis_title="Microbial Analyte", yaxis_title="Result")
-    st.plotly_chart(fig7)
-
 # Aspergillus Testing Tab
 with tab8:
     st.header("Aspergillus Testing Results")
 
+    # Interactive Line Chart for Aspergillus Testing Results
+    st.write("### Aspergillus Testing Results Chart")
     aspergillus_data = {
         "Analyte": ["Aspergillus Flavus", "Aspergillus Fumigatus", "Aspergillus Niger", "Aspergillus Terreus"],
         "Result": ["Negative", "Negative", "Negative", "Negative"],
         "Status": ["Pass", "Pass", "Pass", "Pass"]
     }
     aspergillus_df = pd.DataFrame(aspergillus_data)
+
+    fig9 = px.line(aspergillus_df, x="Analyte", y="Result", title="Aspergillus Testing Results", markers=True)
+    fig9.update_layout(xaxis_title="Aspergillus Analyte", yaxis_title="Result")
+    st.plotly_chart(fig9)
 
     # Summary of Aspergillus Findings
     st.write("""
@@ -269,12 +271,6 @@ with tab8:
     # Table for Aspergillus Data
     st.write("### Aspergillus Measurement Table")
     st.table(aspergillus_df)
-
-    # Interactive Line Chart for Aspergillus Testing Results
-    st.write("### Aspergillus Testing Results Chart")
-    fig9 = px.line(aspergillus_df, x="Analyte", y="Result", title="Aspergillus Testing Results", markers=True)
-    fig9.update_layout(xaxis_title="Aspergillus Analyte", yaxis_title="Result")
-    st.plotly_chart(fig9)
 
 # Footer
 st.write("**Analysis Date:** 07/08/2024")
