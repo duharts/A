@@ -273,5 +273,12 @@ with tab8:
     st.table(aspergillus_df)
 
 # Footer
+# Footer with a link to the original report
 st.write("**Analysis Date:** 07/08/2024")
 st.write("**Lab:** Lexachrom Analytical Laboratory LLC, Freeport, NY")
+
+# Link to the original report
+st.markdown("""
+    **[View Original Report](https://s3-us-west-2.amazonaws.com/catsy.624/CoA+S033WF+Results+v177581-compressed.pdf?_ga=2.173394211.1804007138.1727585352-666523279.1727585352)**
+""")
+
