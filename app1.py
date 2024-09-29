@@ -12,14 +12,16 @@ st.markdown(
     """, 
     unsafe_allow_html=True
 )
+
 # Title and Client Information
 st.title("Lexachrom Analytical Laboratory - Certificate of Analysis")
 st.subheader("NYS OCM Permit #OCM-CPL-00002")
 
 # Use tabs to organize information for better navigation
 tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
-    "Client & Sample Info", "Potency & Cannabinoid Analysis", "", "Terpene Profile", 
-    "Moisture & Filth", "Residual Solvents", "Microbial Testing", "Pesticide & Aspergillus Testing"
+    "Client & Sample Info", "Potency & Cannabinoid Analysis", "Terpene Profile", 
+    "Metals and Mycotoxins", "Moisture & Filth", "Residual Solvents", "Microbial Testing", 
+    "Pesticide & Aspergillus Testing"
 ])
 
 # Client Information Tab
@@ -64,15 +66,6 @@ with tab2:
     }
     potency_df = pd.DataFrame(potency_data)
 
-    # Interactive Line Chart for Potency Results
-    st.write("### Potency Analysis")
-    selected_analytes = st.multiselect("Select Analytes to Display", options=potency_df['Analyte'], default=potency_df['Analyte'])
-    filtered_potency_df = potency_df[potency_df['Analyte'].isin(selected_analytes)]
-    
-    fig = px.line(filtered_potency_df, x="Analyte", y="Percentage", title="Potency Analysis", markers=True)
-    fig.update_layout(xaxis_title="Analyte", yaxis_title="Percentage (%)")
-    st.plotly_chart(fig)
-
     # Summary of Potency Findings
     st.write("""
     **Summary**:
@@ -80,6 +73,11 @@ with tab2:
     - Higher THC levels (e.g., 20.68%) indicate stronger psychoactive effects, while CBD (1.90%) is known for non-psychoactive therapeutic benefits.
     - Other cannabinoids like CBC and CBG also contribute to the overall medical efficacy.
     """)
+    
+    # Table for Potency Data
+    st.write("### Potency Measurement Table")
+    st.table(potency_df)
+
 # Terpene Profile Tab
 with tab3:
     st.header("Terpene Profile")
@@ -89,21 +87,16 @@ with tab3:
     }
     terpene_df = pd.DataFrame(terpene_data)
 
-    # Interactive Line Chart for Terpenes
-    st.write("### Terpene Profile")
-    selected_terpenes = st.multiselect("Select Terpenes to Display", options=terpene_df['Terpene'], default=terpene_df['Terpene'])
-    filtered_terpene_df = terpene_df[terpene_df['Terpene'].isin(selected_terpenes)]
-    
-    fig4 = px.line(filtered_terpene_df, x="Terpene", y="Percentage (%)", title="Terpene Profile", markers=True)
-    fig4.update_layout(xaxis_title="Terpene", yaxis_title="Percentage (%)")
-    st.plotly_chart(fig4)
-
     # Summary of Terpene Profile Findings
     st.write("""
     **Summary**:
     - Terpenes like Beta-Pinene and Limonene contribute to the aroma, flavor, and therapeutic effects of cannabis.
     - Each terpene has unique properties; for example, Limonene is known for its citrusy smell and potential mood-enhancing effects.
     """)
+
+    # Table for Terpene Data
+    st.write("### Terpene Measurement Table")
+    st.table(terpene_df)
 
 # Metals and Mycotoxins Tab
 with tab4:
@@ -116,7 +109,16 @@ with tab4:
         "Status": ["Pass", "Pass", "Pass", "Pass", "Pass", "Pass", "Pass"]
     }
     metals_df = pd.DataFrame(metals_data)
-    metals_df['Amount (ppm)'] = metals_df['Amount (ppm)'].replace('<LOQ', 0).astype(float)
+
+    # Summary of Metals & Mycotoxins Findings
+    st.write("""
+    **Summary**:
+    - The metals test ensures that the sample is free from harmful heavy metals like lead and mercury, all of which passed within safe limits.
+    """)
+
+    # Table for Metals Data
+    st.write("### Metals Measurement Table")
+    st.table(metals_df)
 
     # Mycotoxins Data
     mycotoxins_data = {
@@ -126,27 +128,10 @@ with tab4:
         "Status": ["Pass", "Pass", "Pass", "Pass", "Pass"]
     }
     mycotoxins_df = pd.DataFrame(mycotoxins_data)
-    mycotoxins_df['LOQ (ppm)'] = mycotoxins_df['LOQ (ppm)'].astype(float)
 
-    # Line Chart for Metals
-    st.write("### Metals Testing Results")
-    fig2 = px.line(metals_df, x="Metal", y="Amount (ppm)", title="Metals Testing Results", markers=True)
-    fig2.update_layout(xaxis_title="Metal", yaxis_title="Amount (ppm)")
-    st.plotly_chart(fig2)
-
-    # Line Chart for Mycotoxins
-    st.write("### Mycotoxins Testing Results")
-    fig3 = px.line(mycotoxins_df, x="Analyte", y="LOQ (ppm)", title="Mycotoxins Testing Results", markers=True)
-    fig3.update_layout(xaxis_title="Analyte", yaxis_title="LOQ (ppm)")
-    st.plotly_chart(fig3)
-
-    # Summary of Metals & Mycotoxins Findings
-    st.write("""
-    **Summary**:
-    - The metals test ensures that the sample is free from harmful heavy metals like lead and mercury, all of which passed within safe limits.
-    - Mycotoxins such as Aflatoxins are toxic compounds produced by mold. All levels are below detection limits (LOQ), confirming the sample's safety.
-    """)
-
+    # Table for Mycotoxins Data
+    st.write("### Mycotoxins Measurement Table")
+    st.table(mycotoxins_df)
 
 # Moisture Content & Filth Testing Tab
 with tab5:
@@ -157,28 +142,7 @@ with tab5:
         "Test": ["Moisture Content", "Water Activity", "Mammalian Excreta", "Foreign Material"],
         "Value": [14.10, 0.47, "< 1mg/lb", "< 5% stems, < 2% other FM"]
     }
-
-    # Create DataFrame for the moisture and filth data
     moisture_df = pd.DataFrame(moisture_data)
-
-        # Display the table for Moisture & Filth Testing
-    st.write("### Moisture and Filth Testing Data")
-    st.table(moisture_df)
-
-    # Data for charting moisture content and water activity (numeric values only)
-    moisture_chart_data = {
-        "Test": ["Moisture Content", "Water Activity"],
-        "Value": [14.10, 0.47]
-    }
-
-    # Create DataFrame for charting
-    moisture_chart_df = pd.DataFrame(moisture_chart_data)
-
-    # Interactive Line Chart for Moisture Content and Water Activity
-    st.write("### Moisture Content and Water Activity Chart")
-    fig5 = px.line(moisture_chart_df, x="Test", y="Value", title="Moisture Content and Water Activity", markers=True)
-    fig5.update_layout(xaxis_title="Test", yaxis_title="Value")
-    st.plotly_chart(fig5)
 
     # Summary of Moisture & Filth Findings
     st.write("""
@@ -187,6 +151,10 @@ with tab5:
     - The moisture content is within acceptable limits (14.10%), and the water activity (0.47) is below the threshold for microbial activity, ensuring product stability.
     - No significant levels of mammalian excreta or foreign material were detected, confirming the sample's cleanliness.
     """)
+
+    # Table for Moisture and Filth Data
+    st.write("### Moisture & Filth Measurement Table")
+    st.table(moisture_df)
 
 # Residual Solvents Tab
 with tab6:
@@ -199,18 +167,16 @@ with tab6:
     }
     solvents_df = pd.DataFrame(solvents_data)
 
-    # Line Chart for Residual Solvents
-    st.write("### Residual Solvents Testing Results")
-    fig6 = px.line(solvents_df, x="Solvent", y="Amount (ppm)", title="Residual Solvents Testing Results", markers=True)
-    fig6.update_layout(xaxis_title="Solvent", yaxis_title="Amount (ppm)")
-    st.plotly_chart(fig6)
-
     # Summary of Residual Solvents Findings
     st.write("""
     **Summary**:
     - The residual solvents test ensures that any solvents used in the extraction process are within safe limits.
     - All solvents, including acetone and ethanol, were detected below the limit of quantitation (LOQ), indicating no harmful residues.
     """)
+
+    # Table for Residual Solvent Data
+    st.write("### Residual Solvents Measurement Table")
+    st.table(solvents_df)
 
 # Microbial and Pesticides Testing Tab
 with tab7:
@@ -224,33 +190,15 @@ with tab7:
     }
     microbial_df = pd.DataFrame(microbial_data)
 
-    # Pesticide Data
-    pesticide_data = {
-        "Pesticide": ["Aflatoxin B2", "Aflatoxin B1", "Ochratoxin A", "Aflatoxin G1", "Aflatoxin G2"],
-        "Amount (ppm)": ["<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ"],
-        "Status": ["Pass", "Pass", "Pass", "Pass", "Pass"]
-    }
-    pesticide_df = pd.DataFrame(pesticide_data)
-
-    # Line Chart for Microbial Testing
-    st.write("### Microbial Testing Results")
-    fig7 = px.line(microbial_df, x="Analyte", y="Result", title="Microbial Testing Results", markers=True)
-    fig7.update_layout(xaxis_title="Microbial Analyte", yaxis_title="Result")
-    st.plotly_chart(fig7)
-
-    # Line Chart for Pesticide Testing
-    st.write("### Pesticide Testing Results")
-    fig8 = px.line(pesticide_df, x="Pesticide", y="Amount (ppm)", title="Pesticide Testing Results", markers=True)
-    fig8.update_layout(xaxis_title="Pesticide", yaxis_title="Amount (ppm)")
-    st.plotly_chart(fig8)
-
-    # Summary of Microbial and Pesticide Findings
+    # Summary of Microbial Findings
     st.write("""
     **Summary**:
     - Microbial testing ensures that no harmful microorganisms such as STEC or Salmonella are present in the sample.
-    - All microbial analytes were found to be negative, confirming the product is free from harmful contamination.
-    - The pesticide analysis shows that all pesticide residues were below the detection limit (LOQ), indicating safe levels.
     """)
+
+    # Table for Microbial Data
+    st.write("### Microbial Measurement Table")
+    st.table(microbial_df)
 
 # Aspergillus Testing Tab
 with tab8:
@@ -263,18 +211,16 @@ with tab8:
     }
     aspergillus_df = pd.DataFrame(aspergillus_data)
 
-    # Line Chart for Aspergillus Testing
-    st.write("### Aspergillus Testing Results")
-    fig9 = px.line(aspergillus_df, x="Analyte", y="Result", title="Aspergillus Testing Results", markers=True)
-    fig9.update_layout(xaxis_title="Aspergillus Analyte", yaxis_title="Result")
-    st.plotly_chart(fig9)
-
     # Summary of Aspergillus Findings
     st.write("""
     **Summary**:
     - Aspergillus is a genus of mold that can be harmful if present in cannabis products.
     - The sample tested negative for all species of Aspergillus (Flavus, Fumigatus, Niger, Terreus), ensuring product safety.
     """)
+
+    # Table for Aspergillus Data
+    st.write("### Aspergillus Measurement Table")
+    st.table(aspergillus_df)
 
 # Footer
 st.write("**Analysis Date:** 07/08/2024")
