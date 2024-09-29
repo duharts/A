@@ -73,10 +73,19 @@ with tab2:
     - Higher THC levels (e.g., 20.68%) indicate stronger psychoactive effects, while CBD (1.90%) is known for non-psychoactive therapeutic benefits.
     - Other cannabinoids like CBC and CBG also contribute to the overall medical efficacy.
     """)
-    
+
     # Table for Potency Data
     st.write("### Potency Measurement Table")
     st.table(potency_df)
+
+    # Interactive Line Chart for Potency Results
+    st.write("### Potency Analysis Chart")
+    selected_analytes = st.multiselect("Select Analytes to Display", options=potency_df['Analyte'], default=potency_df['Analyte'])
+    filtered_potency_df = potency_df[potency_df['Analyte'].isin(selected_analytes)]
+    
+    fig = px.line(filtered_potency_df, x="Analyte", y="Percentage", title="Potency Analysis", markers=True)
+    fig.update_layout(xaxis_title="Analyte", yaxis_title="Percentage (%)")
+    st.plotly_chart(fig)
 
 # Terpene Profile Tab
 with tab3:
@@ -97,6 +106,15 @@ with tab3:
     # Table for Terpene Data
     st.write("### Terpene Measurement Table")
     st.table(terpene_df)
+
+    # Interactive Line Chart for Terpenes
+    st.write("### Terpene Profile Chart")
+    selected_terpenes = st.multiselect("Select Terpenes to Display", options=terpene_df['Terpene'], default=terpene_df['Terpene'])
+    filtered_terpene_df = terpene_df[terpene_df['Terpene'].isin(selected_terpenes)]
+    
+    fig4 = px.line(filtered_terpene_df, x="Terpene", y="Percentage (%)", title="Terpene Profile", markers=True)
+    fig4.update_layout(xaxis_title="Terpene", yaxis_title="Percentage (%)")
+    st.plotly_chart(fig4)
 
 # Metals and Mycotoxins Tab
 with tab4:
@@ -120,6 +138,12 @@ with tab4:
     st.write("### Metals Measurement Table")
     st.table(metals_df)
 
+    # Interactive Line Chart for Metals Data
+    st.write("### Metals Testing Results Chart")
+    fig2 = px.line(metals_df, x="Metal", y="Amount (ppm)", title="Metals Testing Results", markers=True)
+    fig2.update_layout(xaxis_title="Metal", yaxis_title="Amount (ppm)")
+    st.plotly_chart(fig2)
+
     # Mycotoxins Data
     mycotoxins_data = {
         "Analyte": ["Aflatoxin B2", "Aflatoxin B1", "Ochratoxin A", "Aflatoxin G1", "Aflatoxin G2"],
@@ -132,6 +156,12 @@ with tab4:
     # Table for Mycotoxins Data
     st.write("### Mycotoxins Measurement Table")
     st.table(mycotoxins_df)
+
+    # Interactive Line Chart for Mycotoxins Data
+    st.write("### Mycotoxins Testing Results Chart")
+    fig3 = px.line(mycotoxins_df, x="Analyte", y="LOQ (ppm)", title="Mycotoxins Testing Results", markers=True)
+    fig3.update_layout(xaxis_title="Analyte", yaxis_title="LOQ (ppm)")
+    st.plotly_chart(fig3)
 
 # Moisture Content & Filth Testing Tab
 with tab5:
@@ -156,6 +186,12 @@ with tab5:
     st.write("### Moisture & Filth Measurement Table")
     st.table(moisture_df)
 
+    # Interactive Line Chart for Moisture Content and Water Activity
+    st.write("### Moisture Content and Water Activity Chart")
+    fig5 = px.line(moisture_df, x="Test", y="Value", title="Moisture Content and Water Activity", markers=True)
+    fig5.update_layout(xaxis_title="Test", yaxis_title="Value")
+    st.plotly_chart(fig5)
+
 # Residual Solvents Tab
 with tab6:
     st.header("Residual Solvents Testing Results")
@@ -177,6 +213,12 @@ with tab6:
     # Table for Residual Solvent Data
     st.write("### Residual Solvents Measurement Table")
     st.table(solvents_df)
+
+    # Interactive Line Chart for Residual Solvents Data
+    st.write("### Residual Solvents Testing Results Chart")
+    fig6 = px.line(solvents_df, x="Solvent", y="Amount (ppm)", title="Residual Solvents Testing Results", markers=True)
+    fig6.update_layout(xaxis_title="Solvent", yaxis_title="Amount (ppm)")
+    st.plotly_chart(fig6)
 
 # Microbial and Pesticides Testing Tab
 with tab7:
@@ -200,6 +242,12 @@ with tab7:
     st.write("### Microbial Measurement Table")
     st.table(microbial_df)
 
+    # Interactive Line Chart for Microbial Data
+    st.write("### Microbial Testing Results Chart")
+    fig7 = px.line(microbial_df, x="Analyte", y="Result", title="Microbial Testing Results", markers=True)
+    fig7.update_layout(xaxis_title="Microbial Analyte", yaxis_title="Result")
+    st.plotly_chart(fig7)
+
 # Aspergillus Testing Tab
 with tab8:
     st.header("Aspergillus Testing Results")
@@ -221,6 +269,12 @@ with tab8:
     # Table for Aspergillus Data
     st.write("### Aspergillus Measurement Table")
     st.table(aspergillus_df)
+
+    # Interactive Line Chart for Aspergillus Testing Results
+    st.write("### Aspergillus Testing Results Chart")
+    fig9 = px.line(aspergillus_df, x="Analyte", y="Result", title="Aspergillus Testing Results", markers=True)
+    fig9.update_layout(xaxis_title="Aspergillus Analyte", yaxis_title="Result")
+    st.plotly_chart(fig9)
 
 # Footer
 st.write("**Analysis Date:** 07/08/2024")
