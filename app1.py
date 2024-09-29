@@ -18,7 +18,7 @@ st.subheader("NYS OCM Permit #OCM-CPL-00002")
 
 # Use tabs to organize information for better navigation
 tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
-    "Client & Sample Info", "Potency & Cannabinoid Analysis", "Terpene Profile", "", 
+    "Client & Sample Info", "Potency & Cannabinoid Analysis", "Terpene Profile", "Metals and Mycotoxins", 
     "Moisture & Filth", "Residual Solvents", "Microbial Testing", "Pesticide & Aspergillus Testing"
 ])
 
