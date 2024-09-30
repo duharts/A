@@ -20,8 +20,8 @@ st.subheader("NYS OCM Permit #OCM-CPL-00002")
 # Use tabs to organize information for better navigation
 tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
     "Client & Sample Info", "Potency & Cannabinoid Analysis", "Terpene Profile", 
-    "Metals and Mycotoxins", "Moisture & Filth", "Residual Solvents", "Microbial Testing", 
-    "Pesticide & Aspergillus Testing"
+    "Metals", "Moisture & Filth", "Residual Solvents", "Microbial Testing", 
+    "Pesticides & Mycotoxins"
 ])
 
 # Client Information Tab
@@ -48,7 +48,6 @@ with tab1:
     - **Batch Size:** 2456.0g
     - **Product Type:** Medical
     - **Collection Date:** 06/27/2024
-    - **Collection Site:** Johnstown
     """)
 
 # Potency and Cannabinoid Analysis Tab
@@ -116,76 +115,51 @@ with tab3:
     st.write("### Terpene Measurement Table")
     st.table(terpene_df)
 
-# Metals and Mycotoxins Tab
+# Metals Tab
 with tab4:
-    st.header("Metals and Mycotoxins Testing Results")
+    st.header("Metals Testing Results")
 
-    # Interactive Line Chart for Metals Data
-    st.write("### Metals Testing Results Chart")
+    # Metals Data
     metals_data = {
         "Metal": ["Antimony (Sb)", "Arsenic", "Cadmium", "Chromium", "Lead", "Nickel", "Mercury"],
         "Amount (ppm)": [0.0007, 0.0006, 0.0006, 1.511, 0.154, 0.086, "<LOQ"],
         "Status": ["Pass", "Pass", "Pass", "Pass", "Pass", "Pass", "Pass"]
     }
     metals_df = pd.DataFrame(metals_data)
-    
+
+    # Interactive Line Chart for Metals Data
+    st.write("### Metals Testing Results Chart")
     fig2 = px.line(metals_df, x="Metal", y="Amount (ppm)", title="Metals Testing Results", markers=True)
     fig2.update_layout(xaxis_title="Metal", yaxis_title="Amount (ppm)")
     st.plotly_chart(fig2)
-
-    # Summary of Metals & Mycotoxins Findings
-    st.write("""
-    **Summary**:
-    - The metals test ensures that the sample is free from harmful heavy metals like lead and mercury, all of which passed within safe limits.
-    """)
 
     # Table for Metals Data
     st.write("### Metals Measurement Table")
     st.table(metals_df)
 
-    # Interactive Line Chart for Mycotoxins Data
-    st.write("### Mycotoxins Testing Results Chart")
-    mycotoxins_data = {
-        "Analyte": ["Aflatoxin B2", "Aflatoxin B1", "Ochratoxin A", "Aflatoxin G1", "Aflatoxin G2"],
-        "LOQ (ppm)": [0.00141, 0.00099, 0.00113, 0.00129, 0.00114],
-        "Amount (ppm)": ["<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ"],
-        "Status": ["Pass", "Pass", "Pass", "Pass", "Pass"]
-    }
-    mycotoxins_df = pd.DataFrame(mycotoxins_data)
-
-    fig3 = px.line(mycotoxins_df, x="Analyte", y="LOQ (ppm)", title="Mycotoxins Testing Results", markers=True)
-    fig3.update_layout(xaxis_title="Analyte", yaxis_title="LOQ (ppm)")
-    st.plotly_chart(fig3)
-
-    # Table for Mycotoxins Data
-    st.write("### Mycotoxins Measurement Table")
-    st.table(mycotoxins_df)
-
-# Moisture Content & Filth Testing Tab
+# Moisture & Filth Testing Tab
 with tab5:
-    st.header("Moisture Content and Filth Testing")
+    st.header("Moisture & Filth Testing")
 
-    # Interactive Line Chart for Moisture Content and Water Activity
-    st.write("### Moisture Content and Water Activity Chart")
     moisture_data = {
         "Test": ["Moisture Content", "Water Activity", "Mammalian Excreta", "Foreign Material"],
-        "Value": [14.10, 0.47, "< 1mg/lb", "< 5% stems, < 2% other FM"]
+        "Value": [14.10, 0.47, "<1mg/lb", "<5% stems, <2% other FM"]
     }
     moisture_df = pd.DataFrame(moisture_data)
-    
+
+    # Moisture Content and Water Activity Chart
+    st.write("### Moisture Content and Water Activity Chart")
     fig5 = px.line(moisture_df, x="Test", y="Value", title="Moisture Content and Water Activity", markers=True)
-    fig5.update_layout(xaxis_title="Test", yaxis_title="Value")
     st.plotly_chart(fig5)
 
     # Summary of Moisture & Filth Findings
     st.write("""
     **Summary**:
-    - Moisture content and water activity are key indicators of product freshness and susceptibility to microbial growth.
-    - The moisture content is within acceptable limits (14.10%), and the water activity (0.47) is below the threshold for microbial activity, ensuring product stability.
+    - The moisture content is within acceptable limits (14.10%), and the water activity (0.47) is below the threshold for microbial activity.
     - No significant levels of mammalian excreta or foreign material were detected, confirming the sample's cleanliness.
     """)
 
-    # Table for Moisture and Filth Data
+    # Table for Moisture & Filth Data
     st.write("### Moisture & Filth Measurement Table")
     st.table(moisture_df)
 
@@ -193,15 +167,26 @@ with tab5:
 with tab6:
     st.header("Residual Solvents Testing Results")
 
-    # Interactive Line Chart for Residual Solvents Data
-    st.write("### Residual Solvents Testing Results Chart")
     solvents_data = {
         "Solvent": ["Acetone", "Acetonitrile", "Total Butane", "Ethanol", "Ethyl Acetate", "Diethyl Ether", "Methanol"],
         "Amount (ppm)": ["<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ"],
         "Status": ["Pass", "Pass", "Pass", "Pass", "Pass", "Pass", "Pass"]
     }
     solvents_df = pd.DataFrame(solvents_data)
-    
+
+   # Residual Solvents Tab
+with tab6:
+    st.header("Residual Solvents Testing Results")
+
+    solvents_data = {
+        "Solvent": ["Acetone", "Acetonitrile", "Total Butane", "Ethanol", "Ethyl Acetate", "Diethyl Ether", "Methanol"],
+        "Amount (ppm)": ["<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ"],
+        "Status": ["Pass", "Pass", "Pass", "Pass", "Pass", "Pass", "Pass"]
+    }
+    solvents_df = pd.DataFrame(solvents_data)
+
+    # Residual Solvents Chart
+    st.write("### Residual Solvents Testing Results Chart")
     fig6 = px.line(solvents_df, x="Solvent", y="Amount (ppm)", title="Residual Solvents Testing Results", markers=True)
     fig6.update_layout(xaxis_title="Solvent", yaxis_title="Amount (ppm)")
     st.plotly_chart(fig6)
@@ -217,12 +202,10 @@ with tab6:
     st.write("### Residual Solvents Measurement Table")
     st.table(solvents_df)
 
-# Microbial and Pesticides Testing Tab
+# Microbial and Pesticide Testing Tab
 with tab7:
-    st.header("Microbial and Pesticides Testing Results")
+    st.header("Microbial and Pesticide Testing Results")
 
-    # Interactive Line Chart for Microbial Data
-    st.write("### Microbial Testing Results Chart")
     microbial_data = {
         "Analyte": ["STEC", "Salmonella", "Total Yeast and Mold Count", "Aerobic Bacteria Count"],
         "Result": ["Negative", "Negative", "Not Detected", "Not Detected"],
@@ -230,11 +213,13 @@ with tab7:
     }
     microbial_df = pd.DataFrame(microbial_data)
 
+    # Microbial Testing Chart
+    st.write("### Microbial Testing Results Chart")
     fig7 = px.line(microbial_df, x="Analyte", y="Result", title="Microbial Testing Results", markers=True)
-    fig7.update_layout(xaxis_title="Microbial Analyte", yaxis_title="Result")
+    fig7.update_layout(xaxis_title="Analyte", yaxis_title="Result")
     st.plotly_chart(fig7)
 
-    # Summary of Microbial Findings
+    # Summary of Microbial Testing Findings
     st.write("""
     **Summary**:
     - Microbial testing ensures that no harmful microorganisms such as STEC or Salmonella are present in the sample.
@@ -244,35 +229,34 @@ with tab7:
     st.write("### Microbial Measurement Table")
     st.table(microbial_df)
 
-# Aspergillus Testing Tab
+# Pesticides & Mycotoxins Testing Tab
 with tab8:
-    st.header("Aspergillus Testing Results")
+    st.header("Pesticides & Mycotoxins Testing Results")
 
-    # Interactive Line Chart for Aspergillus Testing Results
-    st.write("### Aspergillus Testing Results Chart")
-    aspergillus_data = {
-        "Analyte": ["Aspergillus Flavus", "Aspergillus Fumigatus", "Aspergillus Niger", "Aspergillus Terreus"],
-        "Result": ["Negative", "Negative", "Negative", "Negative"],
-        "Status": ["Pass", "Pass", "Pass", "Pass"]
+    pesticides_data = {
+        "Analyte": ["Aflatoxin B2", "Aflatoxin B1", "Ochratoxin A", "Aflatoxin G1", "Aflatoxin G2"],
+        "Amount (ppm)": ["<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ"],
+        "Status": ["Pass", "Pass", "Pass", "Pass", "Pass"]
     }
-    aspergillus_df = pd.DataFrame(aspergillus_data)
+    pesticides_df = pd.DataFrame(pesticides_data)
 
-    fig9 = px.line(aspergillus_df, x="Analyte", y="Result", title="Aspergillus Testing Results", markers=True)
-    fig9.update_layout(xaxis_title="Aspergillus Analyte", yaxis_title="Result")
-    st.plotly_chart(fig9)
+    # Pesticides & Mycotoxins Chart
+    st.write("### Pesticides & Mycotoxins Testing Results Chart")
+    fig8 = px.line(pesticides_df, x="Analyte", y="Amount (ppm)", title="Pesticides & Mycotoxins Testing Results", markers=True)
+    fig8.update_layout(xaxis_title="Analyte", yaxis_title="Amount (ppm)")
+    st.plotly_chart(fig8)
 
-    # Summary of Aspergillus Findings
+    # Summary of Pesticides & Mycotoxins Findings
     st.write("""
     **Summary**:
-    - Aspergillus is a genus of mold that can be harmful if present in cannabis products.
-    - The sample tested negative for all species of Aspergillus (Flavus, Fumigatus, Niger, Terreus), ensuring product safety.
+    - The pesticides and mycotoxins test ensures that the sample is free from harmful pesticides and toxins. 
+    - All detected levels were below the limit of quantitation (LOQ), confirming the product's safety.
     """)
 
-    # Table for Aspergillus Data
-    st.write("### Aspergillus Measurement Table")
-    st.table(aspergillus_df)
+    # Table for Pesticides & Mycotoxins Data
+    st.write("### Pesticides & Mycotoxins Measurement Table")
+    st.table(pesticides_df)
 
-# Footer
 # Footer with a link to the original report
 st.write("**Analysis Date:** 07/08/2024")
 st.write("**Lab:** Lexachrom Analytical Laboratory LLC, Freeport, NY")
@@ -281,4 +265,3 @@ st.write("**Lab:** Lexachrom Analytical Laboratory LLC, Freeport, NY")
 st.markdown("""
     **[View Original Report](https://s3-us-west-2.amazonaws.com/catsy.624/CoA+S033WF+Results+v177581-compressed.pdf?_ga=2.173394211.1804007138.1727585352-666523279.1727585352)**
 """)
-
