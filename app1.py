@@ -74,17 +74,17 @@ with tab2:
     fig.update_layout(xaxis_title="Analyte", yaxis_title="Percentage (%)")
     st.plotly_chart(fig)
 
-    # Summary of Potency Findings
+    # Table for Potency Data
+    st.write("### Potency Measurement Table")
+    st.table(potency_df)
+
+    # Summary
     st.write("""
     **Summary**:
     - Potency results show the levels of cannabinoids in the sample. 
     - Higher THC levels (e.g., 20.68%) indicate stronger psychoactive effects, while CBD (1.90%) is known for non-psychoactive therapeutic benefits.
     - Other cannabinoids like CBC and CBG also contribute to the overall medical efficacy.
     """)
-
-    # Table for Potency Data
-    st.write("### Potency Measurement Table")
-    st.table(potency_df)
 
 # Terpene Profile Tab
 with tab3:
@@ -104,16 +104,16 @@ with tab3:
     fig4.update_layout(xaxis_title="Terpene", yaxis_title="Percentage (%)")
     st.plotly_chart(fig4)
 
-    # Summary of Terpene Profile Findings
+    # Table for Terpene Data
+    st.write("### Terpene Measurement Table")
+    st.table(terpene_df)
+
+    # Summary
     st.write("""
     **Summary**:
     - Terpenes like Beta-Pinene and Limonene contribute to the aroma, flavor, and therapeutic effects of cannabis.
     - Each terpene has unique properties; for example, Limonene is known for its citrusy smell and potential mood-enhancing effects.
     """)
-
-    # Table for Terpene Data
-    st.write("### Terpene Measurement Table")
-    st.table(terpene_df)
 
 # Metals Tab
 with tab4:
@@ -137,6 +137,12 @@ with tab4:
     st.write("### Metals Measurement Table")
     st.table(metals_df)
 
+    # Summary
+    st.write("""
+    **Summary**:
+    - The metals test ensures that the sample is free from harmful heavy metals like lead and mercury, all of which passed within safe limits.
+    """)
+
 # Moisture & Filth Testing Tab
 with tab5:
     st.header("Moisture & Filth Testing")
@@ -152,29 +158,18 @@ with tab5:
     fig5 = px.line(moisture_df, x="Test", y="Value", title="Moisture Content and Water Activity", markers=True)
     st.plotly_chart(fig5)
 
-    # Summary of Moisture & Filth Findings
+    # Table for Moisture & Filth Data
+    st.write("### Moisture & Filth Measurement Table")
+    st.table(moisture_df)
+
+    # Summary
     st.write("""
     **Summary**:
     - The moisture content is within acceptable limits (14.10%), and the water activity (0.47) is below the threshold for microbial activity.
     - No significant levels of mammalian excreta or foreign material were detected, confirming the sample's cleanliness.
     """)
 
-    # Table for Moisture & Filth Data
-    st.write("### Moisture & Filth Measurement Table")
-    st.table(moisture_df)
-
 # Residual Solvents Tab
-with tab6:
-    st.header("Residual Solvents Testing Results")
-
-    solvents_data = {
-        "Solvent": ["Acetone", "Acetonitrile", "Total Butane", "Ethanol", "Ethyl Acetate", "Diethyl Ether", "Methanol"],
-        "Amount (ppm)": ["<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ"],
-        "Status": ["Pass", "Pass", "Pass", "Pass", "Pass", "Pass", "Pass"]
-    }
-    solvents_df = pd.DataFrame(solvents_data)
-
-   # Residual Solvents Tab
 with tab6:
     st.header("Residual Solvents Testing Results")
 
@@ -191,16 +186,16 @@ with tab6:
     fig6.update_layout(xaxis_title="Solvent", yaxis_title="Amount (ppm)")
     st.plotly_chart(fig6)
 
-    # Summary of Residual Solvents Findings
+    # Table for Residual Solvent Data
+    st.write("### Residual Solvents Measurement Table")
+    st.table(solvents_df)
+
+    # Summary
     st.write("""
     **Summary**:
     - The residual solvents test ensures that any solvents used in the extraction process are within safe limits.
     - All solvents, including acetone and ethanol, were detected below the limit of quantitation (LOQ), indicating no harmful residues.
     """)
-
-    # Table for Residual Solvent Data
-    st.write("### Residual Solvents Measurement Table")
-    st.table(solvents_df)
 
 # Microbial and Pesticide Testing Tab
 with tab7:
@@ -219,15 +214,15 @@ with tab7:
     fig7.update_layout(xaxis_title="Analyte", yaxis_title="Result")
     st.plotly_chart(fig7)
 
-    # Summary of Microbial Testing Findings
+    # Table for Microbial Data
+    st.write("### Microbial Measurement Table")
+    st.table(microbial_df)
+
+    # Summary
     st.write("""
     **Summary**:
     - Microbial testing ensures that no harmful microorganisms such as STEC or Salmonella are present in the sample.
     """)
-
-    # Table for Microbial Data
-    st.write("### Microbial Measurement Table")
-    st.table(microbial_df)
 
 # Pesticides & Mycotoxins Testing Tab
 with tab8:
@@ -246,16 +241,16 @@ with tab8:
     fig8.update_layout(xaxis_title="Analyte", yaxis_title="Amount (ppm)")
     st.plotly_chart(fig8)
 
-    # Summary of Pesticides & Mycotoxins Findings
+    # Table for Pesticides & Mycotoxins Data
+    st.write("### Pesticides & Mycotoxins Measurement Table")
+    st.table(pesticides_df)
+
+    # Summary
     st.write("""
     **Summary**:
     - The pesticides and mycotoxins test ensures that the sample is free from harmful pesticides and toxins. 
     - All detected levels were below the limit of quantitation (LOQ), confirming the product's safety.
     """)
-
-    # Table for Pesticides & Mycotoxins Data
-    st.write("### Pesticides & Mycotoxins Measurement Table")
-    st.table(pesticides_df)
 
 # Footer with a link to the original report
 st.write("**Analysis Date:** 07/08/2024")
@@ -265,3 +260,5 @@ st.write("**Lab:** Lexachrom Analytical Laboratory LLC, Freeport, NY")
 st.markdown("""
     **[View Original Report](https://s3-us-west-2.amazonaws.com/catsy.624/CoA+S033WF+Results+v177581-compressed.pdf?_ga=2.173394211.1804007138.1727585352-666523279.1727585352)**
 """)
+
+
