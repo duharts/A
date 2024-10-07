@@ -179,6 +179,10 @@ with tab4:
     - The metals test ensures that the sample is free from harmful heavy metals like lead and mercury, all of which passed within safe limits.
     """)
 
+ # Track tab and chart render events
+    send_amplitude_event('Tab View', {'tab': 'Metals'})
+    send_amplitude_event('Chart Render', {'chart': 'Metals Testing Results'})
+
 # Moisture & Filth Testing Tab
 with tab5:
     st.header("Moisture & Filth Testing")
