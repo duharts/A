@@ -1,6 +1,8 @@
-streamlit
 pandas
-plotly==5.24.1
 amplitude
 requests
+streamlit==1.39.0
+plotly==5.24.1  # Or a compatible version like 5.0.0
+requests
+
 
