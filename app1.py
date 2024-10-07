@@ -5,7 +5,7 @@ import requests
 import time
 
 # Set your Amplitude API key
-AMPLITUDE_API_KEY = '98b11c5f413004992c62dacea60f6170'  # Your Amplitude API key
+AMPLITUDE_API_KEY = '98b11c5f413004992c62dacea60f6170'
 
 # Function to send events to Amplitude via HTTP API
 def send_amplitude_event(event_name, event_properties=None):
@@ -15,7 +15,7 @@ def send_amplitude_event(event_name, event_properties=None):
         "events": [
             {
                 "event_type": event_name,
-                "user_id": "streamlit_user",  # You can use a dynamic user ID here
+                "user_id": "streamlit_user",  # Static user ID; modify as needed
                 "event_properties": event_properties
             }
         ]
@@ -27,8 +27,20 @@ def send_amplitude_event(event_name, event_properties=None):
     except Exception as e:
         st.warning(f"Failed to send event: {str(e)}")
 
-# Track Page View
-send_amplitude_event('Page View', {'page': 'Lexachrom Analytical Laboratory - Certificate of Analysis'})
+# Example usage in the app
+
+# Track a page view event
+send_amplitude_event('Page View', {'page': 'Lexachrom Analytical Laboratory'})
+
+# Track a tab view event
+send_amplitude_event('Tab View', {'tab': 'Cannabinoid Analysis'})
+
+# Track a chart render event
+send_amplitude_event('Chart Render', {'chart': 'Cannabinoid Analysis'})
+
+# Track a button click event
+if st.button('Download Report'):
+    send_amplitude_event('Button Click', {'button': 'Download Report'})
 
 
 # Add the Lexachrom logo to the header and center it
