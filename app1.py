@@ -4,9 +4,9 @@ import plotly.express as px
 import requests
 
 # Set your Amplitude API key
-AMPLITUDE_API_KEY = '98b11c5f413004992c62dacea60f6170'  # Verify your API key
+AMPLITUDE_API_KEY = '98b11c5f413004992c62dacea60f6170'  # Ensure your API key is correct
 
-# Function to send events to Amplitude via HTTP API with debugging
+# Function to send events to Amplitude via HTTP API with detailed debugging
 def send_amplitude_event(event_name, event_properties=None):
     url = "https://api.amplitude.com/2/httpapi"
     payload = {
@@ -14,21 +14,26 @@ def send_amplitude_event(event_name, event_properties=None):
         "events": [
             {
                 "event_type": event_name,
-                "user_id": "streamlit_user",  # Static user ID; modify as needed
+                "user_id": "streamlit_user",  # You can modify this to use actual user info
                 "event_properties": event_properties
             }
         ]
     }
+    
     try:
         response = requests.post(url, json=payload)
-        # Print the response for debugging
-        st.write(f"Event: {event_name}, Status: {response.status_code}, Response: {response.text}")
-        if response.status_code != 200:
-            st.warning(f"Error sending event to Amplitude: {response.status_code} - {response.text}")
-    except Exception as e:
-        st.warning(f"Failed to send event: {str(e)}")
+        
+        # Debugging: Show status and response in Streamlit
+        if response.status_code == 200:
+            st.write(f"Event '{event_name}' sent successfully. Response: {response.text}")
+        else:
+            st.error(f"Error sending event '{event_name}'. Status: {response.status_code}. Response: {response.text}")
+    
+    except requests.exceptions.RequestException as e:
+        st.error(f"Failed to send event '{event_name}'. Error: {str(e)}")
 
 # Track a test event to verify tracking
+st.write("**Sending test event to Amplitude...**")
 send_amplitude_event('Test Event', {'test_property': 'test_value'})
 
 # Add the Lexachrom logo to the header and center it
