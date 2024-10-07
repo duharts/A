@@ -3,5 +3,5 @@ requests
 streamlit
 plotly
 requests
-
+json
 
