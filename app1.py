@@ -213,6 +213,10 @@ with tab5:
     - No significant levels of mammalian excreta or foreign material were detected, confirming the sample's cleanliness.
     """)
 
+    # Track tab and chart render events
+    send_amplitude_event('Tab View', {'tab': 'Moisture & Filth'})
+    send_amplitude_event('Chart Render', {'chart': 'Moisture Content and Water Activity'})
+
 # Residual Solvents Tab
 with tab6:
     st.header("Residual Solvents Testing Results")
@@ -240,6 +244,10 @@ with tab6:
     - The residual solvents test ensures that any solvents used in the extraction process are within safe limits.
     - All solvents, including acetone and ethanol, were detected below the limit of quantitation (LOQ), indicating no harmful residues.
     """)
+    # Track tab and chart render events
+    send_amplitude_event('Tab View', {'tab': 'Residual Solvents'})
+    send_amplitude_event('Chart Render', {'chart': 'Residual Solvents Testing Results'})
+
 
 # Microbial and Pesticide Testing Tab
 with tab7:
@@ -267,7 +275,10 @@ with tab7:
     **Summary**:
     - Microbial testing ensures that no harmful microorganisms such as STEC or Salmonella are present in the sample.
     """)
-
+    # Track tab and chart render events
+    send_amplitude_event('Tab View', {'tab': 'Microbial Testing'})
+    send_amplitude_event('Chart Render', {'chart': 'Microbial Testing Results'})
+    
 # Pesticides & Mycotoxins Testing Tab
 with tab8:
     st.header("Pesticides & Mycotoxins Testing Results")
@@ -296,6 +307,10 @@ with tab8:
     - All detected levels were below the limit of quantitation (LOQ), confirming the product's safety.
     """)
 
+    # Track tab and chart render events
+    send_amplitude_event('Tab View', {'tab': 'Pesticides & Mycotoxins'})
+    send_amplitude_event('Chart Render', {'chart': 'Pesticides & Mycotoxins Testing Results'})
+
 # Footer with a link to the original report
 st.write("**Analysis Date:** 07/08/2024")
 st.write("**Lab:** Lexachrom Analytical Laboratory LLC, Freeport, NY")
@@ -304,3 +319,13 @@ st.write("**Lab:** Lexachrom Analytical Laboratory LLC, Freeport, NY")
 st.markdown("""
     **[View Original Report](https://s3-us-west-2.amazonaws.com/catsy.624/CoA+S033WF+Results+v177581-compressed.pdf?_ga=2.173394211.1804007138.1727585352-666523279.1727585352)**
 """)
+
+# Button to view the original report
+if st.button('View Original Report'):
+    # Track the button click
+    send_amplitude_event('Button Click', {'button': 'View Original Report'})
+    
+    # Redirect user to the original report URL
+    st.markdown("""
+        <meta http-equiv="refresh" content="0; url='https://s3-us-west-2.amazonaws.com/catsy.624/CoA+S033WF+Results+v177581-compressed.pdf?_ga=2.173394211.1804007138.1727585352-666523279.1727585352'" />
+        """, unsafe_allow_html=True)
