@@ -1,21 +1,31 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import amplitude
-from amplitude import BaseEvent, EventOptions
+import requests
 import time
 
-# Initialize Amplitude client
-AMPLITUDE_API_KEY = '98b11c5f413004992c62dacea60f6170'  # Replace this with your Amplitude API key
-amplitude_client = amplitude.Amplitude(AMPLITUDE_API_KEY)
+# Set your Amplitude API key
+AMPLITUDE_API_KEY = '98b11c5f413004992c62dacea60f6170'  # Your Amplitude API key
 
-# Function to send events to Amplitude
+# Function to send events to Amplitude via HTTP API
 def send_amplitude_event(event_name, event_properties=None):
-    event = BaseEvent(
-        event_type=event_name,
-        event_properties=event_properties
-    )
-    amplitude_client.track(event)
+    url = "https://api.amplitude.com/2/httpapi"
+    payload = {
+        "api_key": AMPLITUDE_API_KEY,
+        "events": [
+            {
+                "event_type": event_name,
+                "user_id": "streamlit_user",  # You can use a dynamic user ID here
+                "event_properties": event_properties
+            }
+        ]
+    }
+    try:
+        response = requests.post(url, json=payload)
+        if response.status_code != 200:
+            st.warning(f"Error sending event to Amplitude: {response.status_code}")
+    except Exception as e:
+        st.warning(f"Failed to send event: {str(e)}")
 
 # Track Page View
 send_amplitude_event('Page View', {'page': 'Lexachrom Analytical Laboratory - Certificate of Analysis'})
@@ -111,7 +121,7 @@ with tab2:
     - Other cannabinoids like CBC and CBG also contribute to the overall medical efficacy.
     """)
 
-# Add similar Amplitude tracking to the remaining tabs and interactions as needed.
+# You can track other similar events for remaining tabs and components.
 
 # Footer with a link to the original report
 st.write("**Analysis Date:** 07/08/2024")
