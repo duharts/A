@@ -118,7 +118,10 @@ with tab2:
     - Higher THC levels (e.g., 20.68%) indicate stronger psychoactive effects, while CBD (1.90%) is known for non-psychoactive therapeutic benefits.
     - Other cannabinoids like CBC and CBG also contribute to the overall medical efficacy.
     """)
-
+# Track tab and chart render events
+    send_amplitude_event('Tab View', {'tab': 'Potency & Cannabinoid Analysis'})
+    send_amplitude_event('Chart Render', {'chart': 'Potency Analysis'})
+    
 # Terpene Profile Tab
 with tab3:
     st.header("Terpene Profile")
