@@ -151,6 +151,10 @@ with tab3:
     - Each terpene has unique properties; for example, Limonene is known for its citrusy smell and potential mood-enhancing effects.
     """)
 
+# Track tab and chart renders
+    send_amplitude_event('Tab View', {'tab': 'Terpene Profile'})
+    send_amplitude_event('Chart Render', {'chart': 'Terpene Profile'})
+
 # Metals Tab
 with tab4:
     st.header("Metals Testing Results")
