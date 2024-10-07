@@ -2,11 +2,12 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import requests
+import json
 
 # Set your Amplitude API key
 AMPLITUDE_API_KEY = '98b11c5f413004992c62dacea60f6170'  # Ensure your API key is correct
 
-# Function to send events to Amplitude via HTTP API with detailed debugging
+# Function to send events to Amplitude via HTTP API
 def send_amplitude_event(event_name, event_properties=None):
     url = "https://api.amplitude.com/2/httpapi"
     payload = {
@@ -14,7 +15,7 @@ def send_amplitude_event(event_name, event_properties=None):
         "events": [
             {
                 "event_type": event_name,
-                "user_id": "streamlit_user",  # You can modify this to use actual user info
+                "user_id": "streamlit_user",  # Static user ID; modify as needed
                 "event_properties": event_properties
             }
         ]
@@ -25,17 +26,15 @@ def send_amplitude_event(event_name, event_properties=None):
         
         # Debugging: Show status and response in Streamlit
         if response.status_code == 200:
-            st.write(f"Event '{event_name}' sent successfully. Response: {response.text}")
+            st.write(f"Event '{event_name}' sent successfully.")
         else:
             st.error(f"Error sending event '{event_name}'. Status: {response.status_code}. Response: {response.text}")
     
     except requests.exceptions.RequestException as e:
         st.error(f"Failed to send event '{event_name}'. Error: {str(e)}")
 
-# Track a test event to verify tracking
-st.write("**Sending test event to Amplitude...**")
-send_amplitude_event('Test Event', {'test_property': 'test_value'})
-
+# Track a page view event to verify tracking
+send_amplitude_event('Page View', {'page': 'Lexachrom Analytical Laboratory'})
 # Add the Lexachrom logo to the header and center it
 logo_url = "https://www.lexachrom.com/images/logo_v_2.svg"
 st.markdown(
