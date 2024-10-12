@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import requests
 import json
+import os
 import streamlit.components.v1 as components  # Import for embedding HTML
 
 # Set your Amplitude API key
@@ -194,4 +195,145 @@ with tab4:
     send_amplitude_event('Tab View', {'tab': 'Metals'})
     send_amplitude_event('Chart Render', {'chart': 'Metals Testing Results'})
 
-# (Rest of the code remains unchanged for other tabs)
+# Moisture & Filth Testing Tab
+with tab5:
+    st.header("Moisture & Filth Testing")
+
+    moisture_data = {
+        "Test": ["Moisture Content", "Water Activity", "Mammalian Excreta", "Foreign Material"],
+        "Value": [14.10, 0.47, "<1mg/lb", "<5% stems, <2% other FM"]
+    }
+    moisture_df = pd.DataFrame(moisture_data)
+
+    # Moisture Content and Water Activity Chart
+    st.write("### Moisture Content and Water Activity Chart")
+    fig5 = px.line(moisture_df, x="Test", y="Value", title="Moisture Content and Water Activity", markers=True)
+    st.plotly_chart(fig5)
+
+    # Table for Moisture & Filth Data
+    st.write("### Moisture & Filth Measurement Table")
+    st.table(moisture_df)
+
+    # Summary
+    st.write("""
+    **Summary**:
+    - The moisture content is within acceptable limits (14.10%), and the water activity (0.47) is below the threshold for microbial activity.
+    - No significant levels of mammalian excreta or foreign material were detected, confirming the sample's cleanliness.
+    """)
+
+    # Track tab and chart render events
+    send_amplitude_event('Tab View', {'tab': 'Moisture & Filth'})
+    send_amplitude_event('Chart Render', {'chart': 'Moisture Content and Water Activity'})
+
+# Residual Solvents Tab
+with tab6:
+    st.header("Residual Solvents Testing Results")
+
+    solvents_data = {
+        "Solvent": ["Acetone", "Acetonitrile", "Total Butane", "Ethanol", "Ethyl Acetate", "Diethyl Ether", "Methanol"],
+        "Amount (ppm)": ["<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ"],
+        "Status": ["Pass", "Pass", "Pass", "Pass", "Pass", "Pass", "Pass"]
+    }
+    solvents_df = pd.DataFrame(solvents_data)
+
+    # Residual Solvents Chart
+    st.write("### Residual Solvents Testing Results Chart")
+    fig6 = px.line(solvents_df, x="Solvent", y="Amount (ppm)", title="Residual Solvents Testing Results", markers=True)
+    fig6.update_layout(xaxis_title="Solvent", yaxis_title="Amount (ppm)")
+    st.plotly_chart(fig6)
+
+    # Table for Residual Solvent Data
+    st.write("### Residual Solvents Measurement Table")
+    st.table(solvents_df)
+
+    # Summary
+    st.write("""
+    **Summary**:
+    - The residual solvents test ensures that any solvents used in the extraction process are within safe limits.
+    - All solvents, including acetone and ethanol, were detected below the limit of quantitation (LOQ), indicating no harmful residues.
+    """)
+    send_amplitude_event('Tab View', {'tab': 'Residual Solvents'})
+    send_amplitude_event('Chart Render', {'chart': 'Residual Solvents Testing Results'})
+
+# Microbial and Pesticide Testing Tab
+with tab7:
+    st.header("Microbial and Pesticide Testing Results")
+
+    microbial_data = {
+        "Analyte": ["STEC", "Salmonella", "Total Yeast and Mold Count", "Aerobic Bacteria Count"],
+        "Result": ["Negative", "Negative", "Not Detected", "Not Detected"],
+        "Status": ["Pass", "Pass", "Pass", "Pass"]
+    }
+    microbial_df = pd.DataFrame(microbial_data)
+
+    # Microbial Testing Chart
+    st.write("### Microbial Testing Results Chart")
+    fig7 = px.line(microbial_df, x="Analyte", y="Result", title="Microbial Testing Results", markers=True)
+    fig7.update_layout(xaxis_title="Analyte", yaxis_title="Result")
+    st.plotly_chart(fig7)
+
+    # Table for Microbial Data
+    st.write("### Microbial Measurement Table")
+    st.table(microbial_df)
+
+    # Summary
+    st.write("""
+    **Summary**:
+    - Microbial testing ensures that no harmful microorganisms such as STEC or Salmonella are present in the sample.
+    """)
+    send_amplitude_event('Tab View', {'tab': 'Microbial Testing'})
+    send_amplitude_event('Chart Render', {'chart': 'Microbial Testing Results'})
+
+# Pesticides & Mycotoxins Testing Tab
+with tab8:
+    st.header("Pesticides & Mycotoxins Testing Results")
+
+    pesticides_data = {
+        "Analyte": ["Aflatoxin B2", "Aflatoxin B1", "Ochratoxin A", "Aflatoxin G1", "Aflatoxin G2"],
+        "Amount (ppm)": ["<LOQ", "<LOQ", "<LOQ", "<LOQ", "<LOQ"],
+        "Status": ["Pass", "Pass", "Pass", "Pass", "Pass"]
+    }
+    pesticides_df = pd.DataFrame(pesticides_data)
+
+    # Pesticides & Mycotoxins Chart
+    st.write("### Pesticides & Mycotoxins Testing Results Chart")
+    fig8 = px.line(pesticides_df, x="Analyte", y="Amount (ppm)", title="Pesticides & Mycotoxins Testing Results", markers=True)
+    fig8.update_layout(xaxis_title="Analyte", yaxis_title="Amount (ppm)")
+    st.plotly_chart(fig8)
+
+    # Table for Pesticides & Mycotoxins Data
+    st.write("### Pesticides & Mycotoxins Measurement Table")
+    st.table(pesticides_df)
+
+    # Summary
+    st.write("""
+    **Summary**:
+    - The pesticides and mycotoxins test ensures that the sample is free from harmful pesticides and toxins. 
+    - All detected levels were below the limit of quantitation (LOQ), confirming the product's safety.
+    """)
+    send_amplitude_event('Tab View', {'tab': 'Pesticides & Mycotoxins'})
+    send_amplitude_event('Chart Render', {'chart': 'Pesticides & Mycotoxins Testing Results'})
+
+# Footer with a link to the original report
+st.write("**Analysis Date:** 07/08/2024")
+st.write("**Lab:** Lexachrom Analytical Laboratory LLC, Freeport, NY")
+
+# Link to the original report
+st.markdown("""
+    **[View Original Report](https://s3-us-west-2.amazonaws.com/catsy.624/CoA+S033WF+Results+v177581-compressed.pdf?_ga=2.173394211.1804007138.1727585352-666523279.1727585352)**
+""")
+
+# Button to view the original report
+if st.button('View Original Report'):
+    # Track the button click
+    send_amplitude_event('Button Click', {'button': 'View Original Report'})
+    
+    # Redirect user to the original report URL
+    st.markdown("""
+        <meta http-equiv="refresh" content="0; url='https://s3-us-west-2.amazonaws.com/catsy.624/CoA+S033WF+Results+v177581-compressed.pdf?_ga=2.173394211.1804007138.1727585352-666523279.1727585352'" />
+        """, unsafe_allow_html=True)
+
+# Set up the port
+if __name__ == "__main__":
+    port = os.environ.get("PORT", 80)  # Set port to 80 or read from environment variable
+    st.write(f"Running on port {port}")
